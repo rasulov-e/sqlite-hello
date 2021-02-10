@@ -1,0 +1,6 @@
+"filename", "language", "Go", "XML", "comment", "blank", "total"
+"/home/emirlan/Documents/Projects/Go/sql/cmd/main.go", "Go", 25, 0, 7, 6, 38
+"/home/emirlan/Documents/Projects/Go/sql/go.mod", "XML", 0, 3, 0, 3, 6
+"/home/emirlan/Documents/Projects/Go/sql/platform/newsfeed/item.go", "Go", 5, 0, 0, 2, 7
+"/home/emirlan/Documents/Projects/Go/sql/platform/newsfeed/newsfeed.go", "Go", 37, 0, 1, 11, 49
+"Total", "-", 67, 3, 8, 22, 100

@@ -2,6 +2,8 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
+	"log"
 	"sql/platform/newsfeed"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -16,8 +18,18 @@ CREATE TABLE "newsfeed" (
 */
 
 func main() {
-	db, _ := sql.Open("sqlite3", "./newsfeed.db")
-	feed := newsfeed.NewFeed(db)
+	db, err := sql.Open("sqlite3", "./newsfeed.db")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	if err = db.Ping(); err != nil {
+		log.Fatalln(err)
+	}
+	feed, err := newsfeed.NewFeed(db)
+	if err != nil {
+		fmt.Printf("Error")
+		return
+	}
 
 	feed.Add(newsfeed.Item{
 		Content: "Hello! SQL",
