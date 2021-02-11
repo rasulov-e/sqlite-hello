@@ -30,8 +30,7 @@ func main() {
 		fmt.Printf("Error")
 		return
 	}
+	item, _ := feed.Get()
 
-	feed.Add(newsfeed.Item{
-		Content: "Hello! SQL",
-	})
+	fmt.Println(item)
 }
