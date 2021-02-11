@@ -16,20 +16,28 @@ CREATE TABLE "newsfeed" (
 	PRIMARY KEY("ID" AUTOINCREMENT)
 );
 */
+var db *sql.DB
+var dbPath string = "./newsfeed.db"
 
-func main() {
-	db, err := sql.Open("sqlite3", "./newsfeed.db")
+func initDB() {
+	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	if err = db.Ping(); err != nil {
 		log.Fatalln(err)
 	}
+}
+
+func main() {
+	initDB()
+
 	feed, err := newsfeed.NewFeed(db)
 	if err != nil {
 		fmt.Printf("Error")
 		return
 	}
+
 	item, _ := feed.Get()
 
 	fmt.Println(item)
