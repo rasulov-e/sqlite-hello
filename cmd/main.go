@@ -4,8 +4,10 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"net/http"
 	"sql/platform/newsfeed"
 
+	"github.com/gorilla/mux"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -16,6 +18,7 @@ CREATE TABLE "newsfeed" (
 	PRIMARY KEY("ID" AUTOINCREMENT)
 );
 */
+
 var db *sql.DB
 var dbPath string = "./newsfeed.db"
 
@@ -29,9 +32,7 @@ func initDB() {
 	}
 }
 
-func main() {
-	initDB()
-
+func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	feed, err := newsfeed.NewFeed(db)
 	if err != nil {
 		fmt.Printf("Error")
@@ -40,5 +41,16 @@ func main() {
 
 	item, _ := feed.Get()
 
-	fmt.Println(item)
+}
+
+func HandleAndServe() {
+	router := mux.NewRouter()
+	router.HandleFunc("/", HomeHandler)
+	http.Handle("/", router)
+}
+
+func main() {
+	initDB()
+
+	HandleAndServe()
 }

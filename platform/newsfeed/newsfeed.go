@@ -26,7 +26,10 @@ func (feed *Feed) Get() ([]Item, error) {
 	var content string
 
 	for rows.Next() {
-		rows.Scan(&id, &content)
+		err = rows.Scan(&id, &content)
+		if err != nil {
+			log.Printf("newsfeed: Get: %s", err.Error())
+		}
 		item := Item{
 			ID:      id,
 			Content: content,
@@ -34,8 +37,8 @@ func (feed *Feed) Get() ([]Item, error) {
 		items = append(items, item)
 	}
 	return items, nil
-
 }
+
 func (feed *Feed) Add(item Item) (int64, error) {
 	stmt, _ := feed.DB.Prepare(`
 		INSERT INTO newsfeed (content) values (?)
